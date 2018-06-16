@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import tech.allegro.pawelec.model.Place;
 import tech.allegro.pawelec.model.dto.PlaceDto;
@@ -16,9 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class PlaceMapper {
-
-
 
     public List<PlaceDto> mapJsonToPlaceDtos(String json) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();

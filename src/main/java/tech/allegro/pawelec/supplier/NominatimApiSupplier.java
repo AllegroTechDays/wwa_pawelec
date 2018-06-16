@@ -1,12 +1,14 @@
 package tech.allegro.pawelec.supplier;
 
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Component;
 import tech.allegro.pawelec.InvalidUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @Log
+@Component
 public class NominatimApiSupplier {
     public final static String getPlaceSearchResults = "https://nominatim.openstreetmap.org/search/";
     public final static String getJsonFormat = "?format=json";

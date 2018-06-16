@@ -11,7 +11,6 @@ public class PawelecApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PawelecApplication.class, args);
-
     }
 
     @Bean

@@ -1,9 +1,15 @@
 package tech.allegro.pawelec.service;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import tech.allegro.pawelec.model.dto.PlaceDto;
 import tech.allegro.pawelec.supplier.NominatimApiSupplier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class NominatimClient {
@@ -17,9 +23,11 @@ public class NominatimClient {
     this.nominatimApiSupplier = nominatimApiSupplier;
   }
 
-  public PlaceDto getPlaceDetails(String place) {
+  public List<PlaceDto> getPlaceDetails(String place) {
     String url = getJSONForSearchingPlace(place);
-    PlaceDto placeDto = restTemplate.getForObject(url, PlaceDto.class);
+    ParameterizedTypeReference<List<PlaceDto>> responseType = new ParameterizedTypeReference<List<PlaceDto>>() {};
+    List<PlaceDto> placeDto = new ArrayList<>();
+             restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, responseType);
     return placeDto;
   }
 

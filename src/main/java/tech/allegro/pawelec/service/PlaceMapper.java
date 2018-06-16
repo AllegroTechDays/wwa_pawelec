@@ -2,6 +2,7 @@ package tech.allegro.pawelec.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import tech.allegro.pawelec.model.Place;
@@ -13,15 +14,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlaceMapper {
 
-    @Autowired
-    NominatimApiSupplier nominatimApiSupplier;
 
-    public String getJSONForSearchingPlace(String place) throws UnsupportedEncodingException {
-        return nominatimApiSupplier.getURLWithQuery(place);
-    }
 
     public List<PlaceDto> mapJsonToPlaceDtos(String json) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -30,13 +27,11 @@ public class PlaceMapper {
         return places;
     }
 
-    public Set<Place> mapPlaceDtosToPlaces(PlaceDto... placeDtos) {
-        Set<Place> places = new HashSet<>();
-
-//        for (PlaceDto placeDto : placeDtos) {
-//            Place place = new Place.Builder().
-//        }
-
-        return places;
+    public Set<Place> mapPlaceDtosToPlaces(List<PlaceDto> placeDtos) {
+        ModelMapper mapper = new ModelMapper();
+        return placeDtos
+                .stream()
+                .map(place -> mapper.map(place,Place.class))
+                .collect(Collectors.toSet());
     }
 }
